@@ -6,15 +6,16 @@
     <title>KEZI BAKES - Sweet Delights</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="bakery.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<script src="/bakery.js"></script>
+
 <body>
     <header>
         <div class="container">
             <nav>
                 <div class="logo">
                     <img src="/IMAGES/logo.jpg" alt="Kezi Bakery Logo" class="logo-img">
-                    <p id="logo-name">K'ZBAKES</p> 
+                    <p id="logo-name">K'ZBAKES</p>
                 </div>
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
@@ -29,8 +30,7 @@
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>WELCOME TO  KEZI BAKERY</h1>
-            
+                <h1>WELCOME TO KEZI BAKERY</h1>
                 <p>Where every bite tells a story of love and sweetness</p>
                 <a href="#products" class="btn">Explore Our Treats</a>
             </div>
@@ -41,28 +41,41 @@
         <div class="container">
             <h2 class="section-title">Featured Products</h2>
             <div class="products-grid">
+
                 <div class="product-card">
                     <img src="/IMAGES/chocolate.jpg" alt="Chocolate Cake" class="product-image">
                     <div class="product-info">
                         <h3 class="product-name">Chocolate Delight Cake</h3>
-                        <p class="product-price">GHs35.00</p>
+                        <p class="product-price">GHs120 and above</p>
                         <p class="product-description">Rich chocolate layers with smooth ganache</p>
                         <button class="add-to-cart">Add to Cart</button>
                     </div>
                 </div>
 
                 <div class="product-card">
-                  <div class="slideshow">
-                   <div class="slides">
-                    <img src="/IMAGES/strawberry cupcakes.webp" alt="image 1">
-                    <img src="/IMAGES/capcakes.JPG" alt="image 2" >
-                    
-    
-                   </div>
-                  </div>
+                    <div class="slideshow">
+                        <div class="slides-wrapper">
+                            <div class="slides">
+                                <img src="/IMAGES/strawberry cupcakes.webp" alt="Strawberry Cupcakes">
+                                <img src="/IMAGES/capcake_1.jpg" alt="Cupcake_1">
+                                <img src="/IMAGES/capcakes_2.jpg" alt="Cupcake_2">
+                                <img src="/IMAGES/cake_1.jpg" alt="cake_1">
+                                <img src="/IMAGES/cake_2.jpg" alt="cake_2">
+                            </div>
+                            <button class="slide-arrow prev-arrow">&#10094;</button>
+                            <button class="slide-arrow next-arrow">&#10095;</button>
+                            <div class="slide-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="product-info">
                         <h3 class="product-name">Strawberry Cupcakes</h3>
-                        <p class="product-price">GHs3.50 each</p>
+                        <p class="product-price">GHs5 each</p>
                         <p class="product-description">Light and fluffy with fresh strawberry frosting</p>
                         <button class="add-to-cart">Add to Cart</button>
                     </div>
@@ -72,42 +85,75 @@
                     <img src="/IMAGES/foodbasket.pic.jpeg" alt="Food basket And Customize Cakes" class="product-image">
                     <div class="product-info">
                         <h3 class="product-name">Food basket And Customize Cakes</h3>
-                        <p class="product-price">GHs4.25</p>
+                        <p class="product-price">GHs450</p>
                         <p class="product-description">Buttery, flaky pastry with almond cream filling</p>
                         <button class="add-to-cart">Add to Cart</button>
                     </div>
                 </div>
+
+                <div class="product-card">
+                    <img src="/IMAGES/Room deco.jpeg" alt="Room Decoration" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-name">Room Decor Design</h3>
+                        <p class="product-price">GHs500 and above</p>
+                        <p class="product-description">Elegant balloon and candle room decoration for any special occasion</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="/IMAGES/money bouq.jpg" alt="Flower Bouquet" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-name">Flower Bouquet & Money Bouquet</h3>
+                        <p class="product-price">GHs350 and above</p>
+                        <p class="product-description">Beautiful handcrafted bouquets perfect for birthdays and anniversaries</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="/IMAGES/gift box.jpeg" alt="Gift Package" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-name">Gift Packages</h3>
+                        <p class="product-price">GHs400 and above</p>
+                        <p class="product-description">Carefully curated gift boxes packed with premium items for your loved ones</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-
-     <section class="layout">
-                <h5 id="s21">BEST SERVICES</h5>
-                <h2 id="s22">Benefits You get when using our Services</h1>
-    
-        <div class="section2">
-                <div class="part3">
-            <p id="color"><span><img src="/IMAGES/freshly baked.jpg" width="55"></span>Freshly Baked</p>
-            <h6>We bake every mornig to serve you warm,delicious pastries and breads throughout the day</h6>
-                </div>
-                   <hr>
-
-                   <div class="part1">
-                <p id="color"><span><img src="/IMAGES/custom cakes.jpg" alt=" custom cake" width="55"></span>custom cakes</p>
-                    <h6>Get matched with a cake artist who will design your cake to fit any event-weddings,birthdays,or just cravings.</h6>
-               </div>
-
-                       <hr>
-                         <div class="part2">
-                     <p id="color"><span><img src="/IMAGES/timely delivery.png" width="55"></span>Timely delivery</p>
-                      <h6>Your order delivered on time,safely packed to preserve every layer,detail,and flavour.</h6>
-
-                    </div>
-                 </div>
+    <section class="menu-section">
+        <div class="container">
+            <h2 class="section-title">Our Menu</h2>
+            <div class="menu-image-wrapper">
+                <img src="/IMAGES/menu.jpeg" alt="Valentine's Day Menu" class="menu-image">
+            </div>
+        </div>
     </section>
 
-
+    <section class="layout">
+        <h5 id="s21">BEST SERVICES</h5>
+        <h2 id="s22">Benefits You get when using our Services</h2>
+        <div class="section2">
+            <div class="part3">
+                <p id="color"><span><img src="/IMAGES/freshly baked.jpg" width="55"></span>Freshly Baked</p>
+                <h6>We bake every morning to serve you warm, delicious pastries and breads throughout the day</h6>
+            </div>
+            <hr>
+            <div class="part1">
+                <p id="color"><span><img src="/IMAGES/custom cakes.jpg" alt="custom cake" width="55"></span>Custom Cakes</p>
+                <h6>Get matched with a cake artist who will design your cake to fit any event - weddings, birthdays, or just cravings.</h6>
+            </div>
+            <hr>
+            <div class="part2">
+                <p id="color"><span><img src="/IMAGES/timely delivery.png" width="55"></span>Timely Delivery</p>
+                <h6>Your order delivered on time, safely packed to preserve every layer, detail, and flavour.</h6>
+            </div>
+        </div>
+    </section>
 
     <section class="testimonials">
         <div class="container">
@@ -118,17 +164,15 @@
                     <p class="testimonial-text">"The best bakery in town! Their chocolate cake is absolutely divine."</p>
                     <p class="testimonial-author">- Owusu Asare Douglas</p>
                 </div>
-
                 <div class="testimonial-card">
                     <div class="stars">⭐⭐⭐⭐⭐</div>
                     <p class="testimonial-text">"I ordered a custom birthday cake and it was both beautiful and delicious!"</p>
                     <p class="testimonial-author">- Kingsley .T. Boakye</p>
                 </div>
-
                 <div class="testimonial-card">
                     <div class="stars">⭐⭐⭐⭐⭐</div>
                     <p class="testimonial-text">"Their pastries are always fresh and the staff is incredibly friendly."</p>
-                    <p class="testimonial-author">- Samuel Owusu </p>
+                    <p class="testimonial-author">- Samuel Owusu</p>
                 </div>
             </div>
         </div>
@@ -152,9 +196,15 @@
                     <h3>Kezi Bakery</h3>
                     <p>Sweet treats made with love and passion, using only the finest ingredients.</p>
                     <div class="social-links">
-                        <a href="#">FB</a>
-                        <a href="#">IG</a>
-                        <a href="#">TW</a>
+                        <a href="https://www.instagram.com/Kzi Bakes" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 20px;"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/Kzicakes" target="_blank">
+                            <i class="fab fa-tiktok" style="font-size: 20px;"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-x-twitter" style="font-size: 20px;"></i>
+                        </a>
                     </div>
                 </div>
 
@@ -163,18 +213,18 @@
                     <ul>
                         <li><a href="#products">Our Products</a></li>
                         <li><a href="#about">About Us</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#contact">Contact Info</a></li>
                         <li><a href="#">Order Online</a></li>
                     </ul>
                 </div>
 
-                <div class="footer-section">
+                <div class="footer-section" id="contact">
                     <h3>Contact Info</h3>
                     <ul>
-                        <li>123 Sweet Street</li>
-                        <li>Bakery Town, BT 12345</li>
-                        <li>Phone: (555) 123-4567</li>
-                        <li>Email: hello@kezibakery.com</li>
+                        <li>New Suame - Adjacent Melcom</li>
+                        <li>Bakery Town, Suame-Kumasi</li>
+                        <li>Phone: (233) 559159983</li>
+                        <li>Email: kzibakes@gmail.com</li>
                     </ul>
                 </div>
             </div>
@@ -184,5 +234,7 @@
             <p>&copy; 2024 Kezi Bakery. All rights reserved.</p>
         </div>
     </footer>
+
+    <script src="bakery.js"></script>
 </body>
 </html>
