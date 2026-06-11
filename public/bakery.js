@@ -1,10 +1,9 @@
-const API = "http://localhost:3000/api";
-let cartCount = 0;
+let cart = JSON.parse(localStorage.getItem('keziCart')) || [];
 
 document.addEventListener("DOMContentLoaded", () => {
   setupCartButtons();
   setupNewsletterForm();
-  refreshCartCount();
+  updateCartBadge();
   setupSlideshow();
 });
 
@@ -55,34 +54,23 @@ function setupSlideshow() {
 function setupCartButtons() {
   const buttons = document.querySelectorAll(".add-to-cart");
   buttons.forEach((btn, index) => {
-    const productId = index + 1;
-    btn.addEventListener("click", async () => {
-      btn.disabled = true;
-      btn.textContent = "Adding...";
-      try {
-        const res = await fetch(`${API}/cart/add`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ productId, quantity: 1 }),
-          credentials: "include",
-        });
-        const data = await res.json();
-        if (data.success) {
-          showToast(`🛒 ${data.message}`);
-          cartCount = data.itemCount;
-          updateCartBadge();
-          btn.textContent = "Added ✓";
-          setTimeout(() => (btn.textContent = "Add to Cart"), 2000);
-        } else {
-          showToast("❌ " + data.message, "error");
-          btn.textContent = "Add to Cart";
-        }
-      } catch {
-        showToast("❌ Could not connect to server", "error");
-        btn.textContent = "Add to Cart";
-      } finally {
-        btn.disabled = false;
+    btn.addEventListener("click", () => {
+      const card = btn.closest('.product-card');
+      const name = card.querySelector('.product-name').textContent;
+      const price = card.querySelector('.product-price').textContent;
+
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ id: index + 1, name, price, quantity: 1 });
       }
+
+      localStorage.setItem('keziCart', JSON.stringify(cart));
+      updateCartBadge();
+      showToast(`🛒 ${name} added to cart!`);
+      btn.textContent = "Added ✓";
+      setTimeout(() => (btn.textContent = "Add to Cart"), 2000);
     });
   });
 }
@@ -90,45 +78,27 @@ function setupCartButtons() {
 function setupNewsletterForm() {
   const form = document.querySelector(".newsletter-form");
   if (!form) return;
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
     const emailInput = form.querySelector("input[type='email']");
     const submitBtn = form.querySelector("button[type='submit']");
+    submitBtn.textContent = "Subscribed ✓";
     submitBtn.disabled = true;
-    submitBtn.textContent = "Subscribing...";
-    try {
-      const res = await fetch(`${API}/newsletter/subscribe`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: emailInput.value.trim() }),
-        credentials: "include",
-      });
-      const data = await res.json();
-      showToast(data.success ? "🍰 " + data.message : "⚠️ " + data.message, data.success ? "success" : "warning");
-      if (data.success) emailInput.value = "";
-      submitBtn.textContent = data.success ? "Subscribed ✓" : "Subscribe";
-    } catch {
-      showToast("❌ Could not connect.", "error");
+    showToast("🍰 Thank you for subscribing!", "success");
+    emailInput.value = "";
+    setTimeout(() => {
       submitBtn.textContent = "Subscribe";
-    } finally {
       submitBtn.disabled = false;
-    }
+    }, 3000);
   });
-}
-
-async function refreshCartCount() {
-  try {
-    const res = await fetch(`${API}/cart`, { credentials: "include" });
-    const data = await res.json();
-    if (data.success) { cartCount = data.itemCount; updateCartBadge(); }
-  } catch {}
 }
 
 function updateCartBadge() {
   const badge = document.getElementById("cart-badge");
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   if (badge) {
-    badge.textContent = cartCount;
-    badge.style.display = cartCount > 0 ? "inline-block" : "none";
+    badge.textContent = totalItems;
+    badge.style.display = totalItems > 0 ? "inline-block" : "none";
   }
 }
 
@@ -140,7 +110,7 @@ function showToast(message, type = "success") {
   toast.id = "kezi-toast";
   toast.textContent = message;
   Object.assign(toast.style, {
-    position: "fixed", bottom: "30px", right: "30px",
+    position: "fixed", bottom: "30px", right: "100px",
     background: colors[type], color: "#fff",
     padding: "14px 22px", borderRadius: "8px",
     fontSize: "15px", fontFamily: "Montserrat, sans-serif",
