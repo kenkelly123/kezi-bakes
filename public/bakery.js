@@ -82,14 +82,29 @@ function setupNewsletterForm() {
     e.preventDefault();
     const emailInput = form.querySelector("input[type='email']");
     const submitBtn = form.querySelector("button[type='submit']");
-    submitBtn.textContent = "Subscribed ✓";
+    submitBtn.textContent = "Subscribing...";
     submitBtn.disabled = true;
-    showToast("🍰 Thank you for subscribing!", "success");
-    emailInput.value = "";
-    setTimeout(() => {
+
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        "form-name": "newsletter",
+        "email": emailInput.value.trim()
+      }).toString()
+    }).then(() => {
+      showToast("🍰 Thank you for subscribing!", "success");
+      emailInput.value = "";
+      submitBtn.textContent = "Subscribed ✓";
+      setTimeout(() => {
+        submitBtn.textContent = "Subscribe";
+        submitBtn.disabled = false;
+      }, 3000);
+    }).catch(() => {
+      showToast("❌ Could not subscribe. Try again.", "error");
       submitBtn.textContent = "Subscribe";
       submitBtn.disabled = false;
-    }, 3000);
+    });
   });
 }
 
