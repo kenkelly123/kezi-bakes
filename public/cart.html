@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - Kezi Bakes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="bakery.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .cart-page { padding: 60px 0; min-height: 60vh; }
+        .cart-title { text-align: center; font-size: 2rem; margin-bottom: 40px; color: #333; }
+        .cart-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        .cart-table th { background: #f5a623; color: white; padding: 12px 16px; text-align: left; }
+        .cart-table td { padding: 12px 16px; border-bottom: 1px solid #eee; }
+        .cart-table tr:hover { background: #fdf6ec; }
+        .qty-btn { background: #f5a623; color: white; border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 16px; }
+        .qty-display { margin: 0 10px; font-weight: 600; }
+        .remove-btn { background: #e53935; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; }
+        .cart-total { text-align: right; font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; color: #333; }
+        .whatsapp-order-btn { display: block; width: fit-content; margin: 0 auto; background: #25D366; color: white; padding: 16px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: 600; text-decoration: none; text-align: center; transition: transform 0.2s; }
+        .whatsapp-order-btn:hover { transform: scale(1.05); }
+        .empty-cart { text-align: center; padding: 60px 20px; color: #999; }
+        .empty-cart i { font-size: 60px; margin-bottom: 20px; color: #ddd; }
+        .back-btn { display: inline-block; margin-bottom: 20px; color: #f5a623; text-decoration: none; font-weight: 600; }
+        .back-btn:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="/IMAGES/logo.jpg" alt="Kezi Bakery Logo" class="logo-img">
+                    <p id="logo-name">K'ZBAKES</p>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/#products">Products</a></li>
+                    <li><a href="/#about">About</a></li>
+                    <li><a href="/#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="cart-page">
+        <div class="container">
+            <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Shop</a>
+            <h2 class="cart-title">🛒 Your Cart</h2>
+            <div id="cart-content"></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="copyright">
+            <p>&copy; 2024 Kezi Bakery. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('keziCart')) || [];
+
+        function saveCart() {
+            localStorage.setItem('keziCart', JSON.stringify(cart));
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-content');
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>Your cart is empty</h3>
+                        <p>Go back and add some delicious treats!</p>
+                        <a href="/" class="btn" style="margin-top:20px;">Shop Now</a>
+                    </div>`;
+                return;
+            }
+
+            let total = 0;
+            let rows = '';
+
+            cart.forEach((item, index) => {
+                const priceNum = parseFloat(item.price.replace(/[^0-9.]/g, '')) || 0;
+                const itemTotal = priceNum * item.quantity;
+                total += itemTotal;
+
+                rows += `
+                    <tr>
+                        <td><strong>${item.name}</strong></td>
+                        <td>${item.price}</td>
+                        <td>
+                            <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                            <span class="qty-display">${item.quantity}</span>
+                            <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                        </td>
+                        <td>GHs${itemTotal.toFixed(2)}</td>
+                        <td><button class="remove-btn" onclick="removeItem(${index})">Remove</button></td>
+                    </tr>`;
+            });
+
+            container.innerHTML = `
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+                <div class="cart-total">Total: GHs${total.toFixed(2)}</div>
+                <a href="${buildWhatsAppLink()}" target="_blank" class="whatsapp-order-btn">
+                    <i class="fab fa-whatsapp"></i> Order via WhatsApp
+                </a>`;
+        }
+
+        function changeQty(index, change) {
+            cart[index].quantity += change;
+            if (cart[index].quantity <= 0) cart.splice(index, 1);
+            saveCart();
+            renderCart();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            saveCart();
+            renderCart();
+        }
+
+        function buildWhatsAppLink() {
+            let message = "Hello Kezi Bakes! I'd like to order:\n\n";
+            cart.forEach(item => {
+                message += `• ${item.name} x${item.quantity} - ${item.price}\n`;
+            });
+            message += "\nPlease confirm my order. Thank you!";
+            return `https://wa.me/233559159983?text=${encodeURIComponent(message)}`;
+        }
+
+        renderCart();
+    </script>
+</body>
+</html>
