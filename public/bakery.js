@@ -68,7 +68,7 @@ function setupCartButtons() {
 
       localStorage.setItem('keziCart', JSON.stringify(cart));
       updateCartBadge();
-      showToast(`🛒 ${name} added to cart!`);
+      showToastWithLink(`🛒 ${name} added to cart!`);
       btn.textContent = "Added ✓";
       setTimeout(() => (btn.textContent = "Add to Cart"), 2000);
     });
@@ -115,6 +115,28 @@ function updateCartBadge() {
     badge.textContent = totalItems;
     badge.style.display = totalItems > 0 ? "inline-block" : "none";
   }
+}
+
+function showToastWithLink(message) {
+  const existing = document.getElementById("kezi-toast");
+  if (existing) existing.remove();
+
+  const toast = document.createElement("div");
+  toast.id = "kezi-toast";
+  toast.innerHTML = `
+    <span>${message}</span>
+    <a href="/cart.html" style="display:block; margin-top:8px; color:#fff; font-weight:600; text-decoration:underline;">View Cart →</a>
+  `;
+  Object.assign(toast.style, {
+    position: "fixed", bottom: "30px", right: "100px",
+    background: "#4caf50", color: "#fff",
+    padding: "14px 22px", borderRadius: "8px",
+    fontSize: "15px", fontFamily: "Montserrat, sans-serif",
+    boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
+    zIndex: "9999", opacity: "1", maxWidth: "320px",
+  });
+  document.body.appendChild(toast);
+  setTimeout(() => { toast.style.opacity = "0"; setTimeout(() => toast.remove(), 400); }, 5000);
 }
 
 function showToast(message, type = "success") {
